@@ -13,6 +13,7 @@
 		2D4CC91A25118744009F35B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D4CC91825118744009F35B2 /* Main.storyboard */; };
 		2D4CC91C25118746009F35B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4CC91B25118746009F35B2 /* Assets.xcassets */; };
 		2D4CC91F25118746009F35B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D4CC91D25118746009F35B2 /* LaunchScreen.storyboard */; };
+		2DA2E1B62511CD0600850A98 /* PhotoDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA2E1B52511CD0500850A98 /* PhotoDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2D4CC91B25118746009F35B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D4CC91E25118746009F35B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D4CC92025118746009F35B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DA2E1B52511CD0500850A98 /* PhotoDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				2D4CC91B25118746009F35B2 /* Assets.xcassets */,
 				2D4CC91D25118746009F35B2 /* LaunchScreen.storyboard */,
 				2D4CC92025118746009F35B2 /* Info.plist */,
+				2DA2E1B52511CD0500850A98 /* PhotoDetailsViewController.swift */,
 			);
 			path = Flicky;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DA2E1B62511CD0600850A98 /* PhotoDetailsViewController.swift in Sources */,
 				2D4CC91725118744009F35B2 /* SecondViewController.swift in Sources */,
 				2D4CC91325118744009F35B2 /* AppDelegate.swift in Sources */,
 				2D4CC91525118744009F35B2 /* FirstViewController.swift in Sources */,
