@@ -69,6 +69,9 @@
                         <viewLayoutGuide key="safeArea" id="EDn-GT-5E5"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Feed" id="acW-dT-cKf"/>
+                    <connections>
+                        <outlet property="tableView" destination="3R8-kl-gLg" id="Wje-Pi-U7b"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
@@ -156,6 +159,7 @@
                         <viewLayoutGuide key="safeArea" id="7Td-MS-uU7"/>
                     </view>
                     <connections>
+                        <outlet property="imageView" destination="vIB-Yz-7aY" id="tYE-WY-hJa"/>
                         <outlet property="spinner" destination="XXo-PA-AQG" id="Hn9-pY-OhN"/>
                     </connections>
                 </viewController>
