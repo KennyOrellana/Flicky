@@ -8,9 +8,11 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 
-class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet var tableView: UITableView!
+class FirstViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    @IBOutlet var collectionView: UICollectionView!
     var cards = [Photo]()
     
     override func viewDidLoad() {
@@ -18,39 +20,54 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         requestData()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count
     }
+
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Card", for: indexPath)
-        cell.textLabel?.text = cards[indexPath.row].title
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell else { fatalError("Couldn't dequeue a cell")}
+                
+        cell.imageView.image = nil
+        
+        let url = URL(string: cards[indexPath.row].urlMedium!)!
+        cell.imageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.2))
+
         return cell
     }
+
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "PhotoDetail") as? PhotoDetailsViewController else { return }
+            
+            vc.url = cards[indexPath.row].urlLarge!
         
-        vc.url = cards[indexPath.row].urlLarge!
-    
-        present(vc, animated: true)
+            present(vc, animated: true)
     }
     
     func requestData(){
         APIManager.getFeed().response { response in
-                   if(response.data != nil){
-                       let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
-                   
-                       feed?.photos.photo.forEach({
-                           if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
-                               self.cards.append($0)
-                           }
-                       })
-                       
-                       self.tableView.reloadData()
+           if(response.data != nil){
+               let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
+           
+               feed?.photos.photo.forEach({
+                   if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
+                       self.cards.append($0)
                    }
+               })
+               
+               self.collectionView.reloadData()
+           }
         }
     }
-}
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
+        if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? Header{
+            header.label.text = Strings.HomeHeader
+            return header
+        }
+        return UICollectionReusableView()
+    }
+}

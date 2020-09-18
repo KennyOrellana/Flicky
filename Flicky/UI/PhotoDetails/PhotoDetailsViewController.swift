@@ -23,11 +23,7 @@ class PhotoDetailsViewController: UIViewController {
     }
     
     func loadImage(){
-        AF.request(url).responseImage { response in
-            if case .success(let image) = response.result {
-                self.imageView.image = image
-                self.spinner.stopAnimating()
-            }
-        }
+        let urlImage = URL(string: url)!
+        self.imageView.af.setImage(withURL: urlImage, imageTransition: .crossDissolve(0.2))
     }
 }
