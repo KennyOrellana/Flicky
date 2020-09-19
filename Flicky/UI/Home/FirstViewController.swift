@@ -31,11 +31,23 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell else { fatalError("Couldn't dequeue a cell")}
         let cardItem = cards[indexPath.row]
         cell.spinner.startAnimating()
+        cell.spinner.alpha = 1
         cell.imageView.image = nil
         cell.imageView.layer.borderColor = UIColor.white.cgColor
 
         let url = URL(string: cardItem.urlMedium!)!
-        cell.imageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.2))
+        cell.imageView.af.setImage(
+            withURL: url,
+            imageTransition: .crossDissolve(0.2),
+            completion: { response in
+                cell.spinner.stopAnimating()
+                cell.spinner.alpha = 0
+                
+                if(response.error != nil){
+                    cell.imageView.image = UIImage(named: "image_not_found")
+                }
+            }
+        )
         
         cell.title.text = cardItem.title
         let info = "\(cardItem.ownername) / \(cardItem.getDateFormated())"
@@ -74,7 +86,7 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
                 })
 
                 self.spinner.stopAnimating()
-                self.spinner.alpha = 0.0
+                self.spinner.alpha = 0
                 self.collectionView.reloadData()
            }
         }

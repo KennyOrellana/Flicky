@@ -24,6 +24,14 @@ class PhotoDetailsViewController: UIViewController {
     
     func loadImage(){
         let urlImage = URL(string: url)!
-        self.imageView.af.setImage(withURL: urlImage, imageTransition: .crossDissolve(0.2))
+        self.imageView.af.setImage(
+            withURL: urlImage,
+            imageTransition: .crossDissolve(0.2),
+            completion: { response in
+                if(response.error != nil){
+                    self.imageView.image = UIImage(named: "image_not_found")
+                }
+            }
+        )
     }
 }
