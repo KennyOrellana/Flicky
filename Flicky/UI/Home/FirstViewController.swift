@@ -13,11 +13,13 @@ import AlamofireImage
 class FirstViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var spinner: UIActivityIndicatorView!
     var cards = [Photo]()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         requestData()
     }
     
@@ -28,6 +30,7 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell else { fatalError("Couldn't dequeue a cell")}
         let cardItem = cards[indexPath.row]
+        cell.spinner.startAnimating()
         cell.imageView.image = nil
         cell.imageView.layer.borderColor = UIColor.white.cgColor
 
@@ -55,18 +58,24 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         return UICollectionReusableView()
     }
     
+    func setupUI(){
+        self.spinner.startAnimating()
+    }
+    
     func requestData() {
         APIManager.getFeed().response { response in
-           if(response.data != nil){
-               let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
-           
-               feed?.photos.photo.forEach({
+            if(response.data != nil){
+                let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
+
+                feed?.photos.photo.forEach({
                    if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
                        self.cards.append($0)
                    }
-               })
-               
-               self.collectionView.reloadData()
+                })
+
+                self.spinner.stopAnimating()
+                self.spinner.alpha = 0.0
+                self.collectionView.reloadData()
            }
         }
     }
