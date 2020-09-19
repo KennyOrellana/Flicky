@@ -22,6 +22,7 @@
 		2D5FC8F72514726E00CD09AA /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5FC8F62514726E00CD09AA /* Header.swift */; };
 		2D5FC8F9251481F200CD09AA /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5FC8F8251481F200CD09AA /* Strings.swift */; };
 		2DA2E1B62511CD0600850A98 /* PhotoDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA2E1B52511CD0500850A98 /* PhotoDetailsViewController.swift */; };
+		2DEEA30E2515C71C00948A6B /* DateExtentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEEA30D2515C71C00948A6B /* DateExtentions.swift */; };
 		D916FE59FA4E61B47149AF36 /* Pods_Flicky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2266E6DEE720D983445E0559 /* Pods_Flicky.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		2D5FC8F62514726E00CD09AA /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		2D5FC8F8251481F200CD09AA /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		2DA2E1B52511CD0500850A98 /* PhotoDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewController.swift; sourceTree = "<group>"; };
+		2DEEA30D2515C71C00948A6B /* DateExtentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtentions.swift; sourceTree = "<group>"; };
 		E6032D2511A2ECE737E22355 /* Pods-Flicky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicky.release.xcconfig"; path = "Target Support Files/Pods-Flicky/Pods-Flicky.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +155,7 @@
 		2D4CC91125118744009F35B2 /* Flicky */ = {
 			isa = PBXGroup;
 			children = (
+				2DEEA30C2515C6FE00948A6B /* Utils */,
 				2D38707525132D2A00B35345 /* UI */,
 				2D38707425132D0200B35345 /* Library */,
 				2D387071251327ED00B35345 /* Constants */,
@@ -164,6 +167,14 @@
 				2D4CC92025118746009F35B2 /* Info.plist */,
 			);
 			path = Flicky;
+			sourceTree = "<group>";
+		};
+		2DEEA30C2515C6FE00948A6B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2DEEA30D2515C71C00948A6B /* DateExtentions.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +298,7 @@
 				2DA2E1B62511CD0600850A98 /* PhotoDetailsViewController.swift in Sources */,
 				2D38707925132E4300B35345 /* APIManager.swift in Sources */,
 				2D5FC8F72514726E00CD09AA /* Header.swift in Sources */,
+				2DEEA30E2515C71C00948A6B /* DateExtentions.swift in Sources */,
 				2D38706C25130F0E00B35345 /* Feed.swift in Sources */,
 				2D4CC91725118744009F35B2 /* SecondViewController.swift in Sources */,
 				2D4CC91325118744009F35B2 /* AppDelegate.swift in Sources */,

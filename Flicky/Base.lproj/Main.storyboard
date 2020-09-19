@@ -24,45 +24,70 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="100" minimumInteritemSpacing="80" id="XRx-yu-Zjv">
-                                    <size key="itemSize" width="533" height="300"/>
+                                    <size key="itemSize" width="533" height="316"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="80" minY="80" maxX="80" maxY="80"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Eqq-TK-DrT" customClass="CollectionViewCell" customModule="Flicky" customModuleProvider="target">
-                                        <rect key="frame" x="80" y="130" width="533" height="300"/>
+                                        <rect key="frame" x="80" y="130" width="533" height="316"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="533" height="300"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="533" height="316"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="1EW-Y4-HAz">
-                                                    <rect key="frame" x="259" y="137" width="40" height="40"/>
+                                                    <rect key="frame" x="246" y="138" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="color" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </activityIndicatorView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" restorationIdentifier="imageView" adjustsImageWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L8s-90-KdI">
-                                                    <rect key="frame" x="0.0" y="0.0" width="533" height="300"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" restorationIdentifier="imageView" translatesAutoresizingMaskIntoConstraints="NO" id="L8s-90-KdI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="533" height="316"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-j5-EtL">
-                                                    <rect key="frame" x="233" y="134" width="92" height="46"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="gradient" translatesAutoresizingMaskIntoConstraints="NO" id="FdX-6Z-sQz">
+                                                    <rect key="frame" x="0.0" y="0.0" width="533" height="316"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enablesMarqueeWhenAncestorFocused="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-j5-EtL">
+                                                    <rect key="frame" x="26" y="240" width="491" height="28"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Label">
+                                                            <attributes>
+                                                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIK-mC-cwz">
-                                                    <rect key="frame" x="233" y="134" width="92" height="46"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enablesMarqueeWhenAncestorFocused="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIK-mC-cwz">
+                                                    <rect key="frame" x="26" y="276" width="491" height="28"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Label">
+                                                            <attributes>
+                                                                <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <font key="NSFont" size="24" name="HelveticaNeue"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="OIK-mC-cwz" firstAttribute="top" secondItem="1sR-j5-EtL" secondAttribute="bottom" constant="8" id="8HF-9T-FwR"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="OIK-mC-cwz" secondAttribute="trailing" constant="8" id="K4M-3G-0A3"/>
+                                            <constraint firstItem="1sR-j5-EtL" firstAttribute="leading" secondItem="Eqq-TK-DrT" secondAttribute="leadingMargin" constant="8" id="NYT-yY-M3O"/>
+                                            <constraint firstItem="OIK-mC-cwz" firstAttribute="leading" secondItem="Eqq-TK-DrT" secondAttribute="leadingMargin" constant="8" id="dpx-hC-zIZ"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="OIK-mC-cwz" secondAttribute="bottom" constant="4" id="oGL-Kc-5lf"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="1sR-j5-EtL" secondAttribute="trailing" constant="8" id="thB-7R-fEz"/>
+                                        </constraints>
                                         <connections>
+                                            <outlet property="gradient" destination="FdX-6Z-sQz" id="elt-UW-HlG"/>
                                             <outlet property="imageView" destination="L8s-90-KdI" id="U2o-kq-xY9"/>
                                             <outlet property="info" destination="OIK-mC-cwz" id="Gc1-Ka-y4W"/>
                                             <outlet property="spinner" destination="1EW-Y4-HAz" id="gu2-60-v7Q"/>
@@ -201,4 +226,7 @@
             <point key="canvasLocation" x="4572" y="-640"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gradient" width="533" height="123"/>
+    </resources>
 </document>

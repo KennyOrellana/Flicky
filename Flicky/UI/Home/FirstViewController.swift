@@ -15,6 +15,7 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
     @IBOutlet var collectionView: UICollectionView!
     var cards = [Photo]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         requestData()
@@ -24,29 +25,37 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         return cards.count
     }
 
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell else { fatalError("Couldn't dequeue a cell")}
-                
+        let cardItem = cards[indexPath.row]
         cell.imageView.image = nil
-        
-        let url = URL(string: cards[indexPath.row].urlMedium!)!
+        cell.imageView.layer.borderColor = UIColor.white.cgColor
+
+        let url = URL(string: cardItem.urlMedium!)!
         cell.imageView.af.setImage(withURL: url, imageTransition: .crossDissolve(0.2))
+        
+        cell.title.text = cardItem.title
+        let info = "\(cardItem.ownername) / \(cardItem.getDateFormated())"
+        cell.info.text = info
 
         return cell
     }
 
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "PhotoDetail") as? PhotoDetailsViewController else { return }
-            
-            vc.url = cards[indexPath.row].urlLarge!
-        
-            present(vc, animated: true)
+        vc.url = cards[indexPath.row].urlLarge!
+        present(vc, animated: true)
     }
     
-    func requestData(){
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? Header{
+            header.label.text = Strings.HomeHeader
+            return header
+        }
+        return UICollectionReusableView()
+    }
+    
+    func requestData() {
         APIManager.getFeed().response { response in
            if(response.data != nil){
                let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
@@ -60,14 +69,5 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
                self.collectionView.reloadData()
            }
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-        if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? Header{
-            header.label.text = Strings.HomeHeader
-            return header
-        }
-        return UICollectionReusableView()
     }
 }

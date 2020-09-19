@@ -48,4 +48,12 @@ class Photo: Codable {
         self.heightK = heightK
         self.widthK = widthK
     }
+    
+    func getDateFormated() -> String {
+        if let date = Double(dateupload) {
+            return date.getDateStringFromUTC()
+        } else {
+            return ""
+        }
+    }
 }
