@@ -33,7 +33,8 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         cell.spinner.startAnimating()
         cell.spinner.alpha = 1
         cell.imageView.image = nil
-        cell.imageView.layer.borderColor = UIColor.white.cgColor
+        cell.imageView.layer.borderWidth = 1.00
+        cell.imageView.layer.borderColor = UIColor.lightGray.cgColor
 
         let url = URL(string: cardItem.urlMedium!)!
         cell.imageView.af.setImage(
