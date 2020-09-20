@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
-class FirstViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class FeedViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchResultsUpdating {
     
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var spinner: UIActivityIndicatorView!
@@ -69,6 +69,11 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
             return header
         }
         return UICollectionReusableView()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let text = searchController.searchBar.text else { return }
+        print(text)
     }
     
     func setupUI(){

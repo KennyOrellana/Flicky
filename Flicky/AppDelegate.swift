@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        setupTabBarWithSearchContainerView()
         return true
     }
 
@@ -34,5 +35,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    }
+    
+    func setupTabBarWithSearchContainerView() {
+        if let tabBarController = window?.rootViewController as? UITabBarController {
+            let feedViewController = tabBarController.viewControllers?[0] as? FeedViewController
+            
+            let searchController = UISearchController(searchResultsController: nil)
+            searchController.searchBar.keyboardAppearance = UIKeyboardAppearance.dark
+            searchController.searchResultsUpdater = feedViewController
+            searchController.hidesNavigationBarDuringPresentation = false
+            searchController.view.backgroundColor = UIColor.black
+            
+            let searchContainerViewController = UISearchContainerViewController(searchController: searchController)
+            searchContainerViewController.title = "Search"
+            
+//            let searchNavController = UINavigationController(rootViewController: searchContainerViewController)
+//            searchNavController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "searchIcon"), tag: 0)
+
+//            tabBarController.viewControllers?.append(searchNavController)
+            tabBarController.viewControllers?.append(searchContainerViewController)
+        }
+
     }
 }
