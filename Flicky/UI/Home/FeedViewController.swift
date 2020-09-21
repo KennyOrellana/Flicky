@@ -118,6 +118,8 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
             if(response.data != nil){
                 self.queryString = ""
                 self.presentData(response.data!)
+            }  else {
+                self.showError()
             }
         }
     }
@@ -131,7 +133,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.tabBarController?.selectedIndex = 0
                 self.queryString = queryString
                 self.presentData(response.data!)
-           }
+            } else {
+                self.showError()
+            }
         }
     }
     
@@ -148,5 +152,31 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.spinner.stopAnimating()
         self.spinner.alpha = 0
         self.collectionView.reloadData()
+    }
+    
+    func showError(){
+        let alert = UIAlertController(title: "Oops!", message: "Something went wrong :(", preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Retry", comment: "Default action"),
+                style: .default, handler: { _ in
+                    if(self.queryString.isEmpty){
+                        self.requestData()
+                    } else {
+                        self.search(self.queryString)
+                    }
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Exit", comment: ""),
+                style: .default, handler: { _ in
+                    exit(0)
+                }
+            )
+        )
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
