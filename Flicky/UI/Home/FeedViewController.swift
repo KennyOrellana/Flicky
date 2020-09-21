@@ -84,7 +84,8 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
      */
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vc = storyboard?.instantiateViewController(identifier: "PhotoDetail") as? PhotoDetailsViewController else { return }
-        vc.url = cards[indexPath.row].urlLarge!
+        vc.cards = cards
+        vc.currentPosition = indexPath.row
         present(vc, animated: true)
     }
     
