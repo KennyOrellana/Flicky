@@ -97,7 +97,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
      Data Loading and Search
      */
     func checkIfRequirePagination(position: Int){
-        if(position + 9 > cards.count && lastPage < totalPages && !loadingNexPage){
+        if(position + 9 == cards.count && lastPage < totalPages && !loadingNexPage){
             if(queryString.isEmpty){
                 requestData()
             } else {
@@ -144,7 +144,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
             
             APIManager.search(page: requestPage, queryString).response { response in
                 if(response.data != nil){
-                    self.tabBarController?.selectedIndex = 0
+                    if(requestPage == 1){ //Change tab when request first page
+                        self.tabBarController?.selectedIndex = 0
+                    }
                     self.queryString = queryString
                     self.presentData(response.data!)
                 } else {
@@ -156,21 +158,23 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func presentData(_ data: Data) {
         let feed = try? JSONDecoder().decode(Feed.self, from: data)
-
+        
+        if(feed != nil){
+            self.totalPages = feed!.photos.pages
+            self.lastPage = feed!.photos.page
+        }
+        
         if(lastPage == 1){ //Only clear list when it's loading from page 1
             self.cards.removeAll()
         }
+        
         feed?.photos.photo.forEach({
             if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
                self.cards.append($0)
             }
         })
 
-        if(feed != nil){
-            self.totalPages = feed!.photos.pages
-            self.lastPage = feed!.photos.page
-            loadingNexPage = false
-        }
+        loadingNexPage = false
         
         self.spinner.stopAnimating()
         self.spinner.alpha = 0
