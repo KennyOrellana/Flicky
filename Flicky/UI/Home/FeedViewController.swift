@@ -16,7 +16,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet var spinner: UIActivityIndicatorView!
     var cards = [Photo]()
     var timer: Timer?
-    
+    var queryString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +66,15 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? Header{
-            header.label.text = Strings.HomeHeader
+            if(!queryString.isEmpty){
+                if( self.cards.count == 0){
+                    header.label.text = "No search results for \"\(queryString)\""
+                } else {
+                    header.label.text = "Search results for \"\(queryString)\""
+                }
+            } else {
+                header.label.text = Strings.HomeHeader
+            }
             return header
         }
         return UICollectionReusableView()
@@ -77,7 +85,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         timer?.invalidate()
         
-        if(!text.isEmpty){
+        if(text.isEmpty){
+            requestData()
+        } else {
             timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
                 timer.invalidate()
                 self.search(text)
@@ -90,9 +100,13 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func requestData() {
+        self.spinner.startAnimating()
+        self.spinner.alpha = 1
+        
         APIManager.getFeed().response { response in
             debugPrint(response)
             if(response.data != nil){
+                self.queryString = ""
                 self.presentData(response.data!)
             }
         }
@@ -105,6 +119,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         APIManager.search(queryString).response { response in
             if(response.data != nil){
                 self.tabBarController?.selectedIndex = 0
+                self.queryString = queryString
                 self.presentData(response.data!)
            }
         }
