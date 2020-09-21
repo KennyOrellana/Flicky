@@ -18,12 +18,17 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     var timer: Timer?
     var queryString: String = ""
     
+    /*
+    UIViewController
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         requestData()
     }
     
+    /*
+     UICollectionViewDataSource
+     */
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return cards.count
     }
@@ -57,12 +62,6 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let vc = storyboard?.instantiateViewController(identifier: "PhotoDetail") as? PhotoDetailsViewController else { return }
-        vc.url = cards[indexPath.row].urlLarge!
-        present(vc, animated: true)
-    }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "Header", for: indexPath) as? Header{
@@ -80,6 +79,18 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         return UICollectionReusableView()
     }
     
+    /*
+     UICollectionViewDelegate
+     */
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let vc = storyboard?.instantiateViewController(identifier: "PhotoDetail") as? PhotoDetailsViewController else { return }
+        vc.url = cards[indexPath.row].urlLarge!
+        present(vc, animated: true)
+    }
+    
+    /*
+     UISearchResultsUpdating
+     */
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
         
@@ -95,10 +106,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    func setupUI(){
-        self.spinner.startAnimating()
-    }
-    
+    /*
+     Data Loading and Search
+     */
     func requestData() {
         self.spinner.startAnimating()
         self.spinner.alpha = 1

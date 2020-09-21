@@ -27,11 +27,11 @@
                                     <size key="itemSize" width="533" height="316"/>
                                     <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="80" minY="80" maxX="80" maxY="80"/>
+                                    <inset key="sectionInset" minX="80" minY="40" maxX="80" maxY="40"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Eqq-TK-DrT" customClass="CollectionViewCell" customModule="Flicky" customModuleProvider="target">
-                                        <rect key="frame" x="80" y="130" width="533" height="316"/>
+                                        <rect key="frame" x="80" y="90" width="533" height="316"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="533" height="316"/>
