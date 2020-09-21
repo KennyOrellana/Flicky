@@ -11,28 +11,28 @@ import Alamofire
 
 class APIManager {
     
-    static func getFeed() -> DataRequest {
-        var params = getBaseParams()
+    static func getFeed(page: Int = 1) -> DataRequest {
+        var params = getBaseParams(page: page)
         params[Params.Method] = FlickrMethod.GetRecent
-        params[Params.Extras] = ParamsValues.Extras
         
         return AF.request(API.FlickrURL, parameters: params)
     }
     
-    static func search(_ query: String) -> DataRequest {
-        var params = getBaseParams()
+    static func search(page: Int = 1, _ query: String) -> DataRequest {
+        var params = getBaseParams(page: page)
         params[Params.Method] = FlickrMethod.Search
-        params[Params.Extras] = ParamsValues.Extras
         params[Params.Text] = query
         
         return AF.request(API.FlickrURL, parameters: params)
     }
     
-    private static func getBaseParams() -> [String:String] {
+    private static func getBaseParams(page: Int = 1) -> [String:String] {
         return [
             Params.Format : ParamsValues.Json,
             Params.NoJsonCallback : ParamsValues.One,
-            Params.ApiKey : API.FlickrKey
+            Params.ApiKey : API.FlickrKey,
+            Params.Extras : ParamsValues.Extras,
+            Params.Page : String(page)
         ]
     }
 }

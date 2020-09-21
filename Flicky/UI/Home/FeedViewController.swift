@@ -15,6 +15,9 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var spinner: UIActivityIndicatorView!
     var cards = [Photo]()
+    var totalPages = 1
+    var lastPage = 0
+    var loadingNexPage = false
     var timer: Timer?
     var queryString: String = ""
     
@@ -59,6 +62,14 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         cell.title.text = cardItem.title
         let info = "\(cardItem.ownername) / \(cardItem.getDateFormated())"
         cell.info.text = info
+        
+        if(indexPath.row + 9 > cards.count && lastPage < totalPages && !loadingNexPage){
+            if(queryString.isEmpty){
+                requestData()
+            } else {
+                search(queryString)
+            }
+        }
 
         return cell
     }
@@ -98,8 +109,11 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
         timer?.invalidate()
         
         if(text.isEmpty){
-            requestData()
-        } else {
+            if(!queryString.isEmpty){ //User deleted search
+                lastPage = 0
+                requestData()
+            }
+        } else if(text != queryString){ //Search when current query is different fron last requested
             timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
                 timer.invalidate()
                 self.search(text)
@@ -111,31 +125,49 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
      Data Loading and Search
      */
     func requestData() {
-        self.spinner.startAnimating()
-        self.spinner.alpha = 1
+        if(lastPage < totalPages && !loadingNexPage){
+            loadingNexPage = true
+            
+            let requestPage = lastPage + 1 //Using local var to not modify last loaded page until new data arrives
         
-        APIManager.getFeed().response { response in
-            debugPrint(response)
-            if(response.data != nil){
-                self.queryString = ""
-                self.presentData(response.data!)
-            }  else {
-                self.showError()
+            if(cards.isEmpty){ //Show progress bar only when screen is empty
+                self.spinner.startAnimating()
+                self.spinner.alpha = 1
+            }
+            
+            APIManager.getFeed(page: requestPage).response { response in
+                if(response.data != nil){
+                    self.queryString = ""
+                    self.presentData(response.data!)
+                }  else if(self.cards.isEmpty){
+                    self.showError()
+                }
             }
         }
     }
     
     func search(_ queryString: String){
-        self.spinner.startAnimating()
-        self.spinner.alpha = 1
-        
-        APIManager.search(queryString).response { response in
-            if(response.data != nil){
-                self.tabBarController?.selectedIndex = 0
-                self.queryString = queryString
-                self.presentData(response.data!)
-            } else {
-                self.showError()
+        if(queryString != self.queryString || queryString == self.queryString && lastPage < totalPages && !loadingNexPage){//Request search when query changed or is the same but reached last items
+            loadingNexPage = true
+            
+            var requestPage = 1 //Using local var to not modify last loaded page until new data arrives
+            if(queryString == self.queryString){ //If it's the same search, request next page, if not request first page
+                requestPage = lastPage + 1
+            }
+                
+            if(cards.isEmpty){ //Show progress bar only when screen is empty
+                self.spinner.startAnimating()
+                self.spinner.alpha = 1
+            }
+            
+            APIManager.search(page: requestPage, queryString).response { response in
+                if(response.data != nil){
+                    self.tabBarController?.selectedIndex = 0
+                    self.queryString = queryString
+                    self.presentData(response.data!)
+                } else {
+                    self.showError()
+                }
             }
         }
     }
@@ -143,13 +175,21 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     func presentData(_ data: Data) {
         let feed = try? JSONDecoder().decode(Feed.self, from: data)
 
-        self.cards.removeAll()
+        if(lastPage == 1){ //Only clear list when it's loading from page 1
+            self.cards.removeAll()
+        }
         feed?.photos.photo.forEach({
             if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
                self.cards.append($0)
             }
         })
 
+        if(feed != nil){
+            self.totalPages = feed!.photos.pages
+            self.lastPage = feed!.photos.page
+            loadingNexPage = false
+        }
+        
         self.spinner.stopAnimating()
         self.spinner.alpha = 0
         self.collectionView.reloadData()

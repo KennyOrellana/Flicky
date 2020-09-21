@@ -20,6 +20,7 @@ struct Params {
     static let ApiKey = "api_key"
     static let Extras = "extras"
     static let Text = "text"
+    static let Page = "page"
 }
 
 struct ParamsValues {
