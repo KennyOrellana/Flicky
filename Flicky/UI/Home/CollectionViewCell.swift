@@ -54,4 +54,30 @@ class CollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    func setData(_ cardItem: Photo) {
+        spinner.startAnimating()
+        spinner.alpha = 1
+        imageView.image = nil
+        imageView.layer.borderWidth = 1.00
+        imageView.layer.borderColor = UIColor.lightGray.cgColor
+
+        let url = URL(string: cardItem.urlMedium!)!
+        imageView.af.setImage(
+            withURL: url,
+            imageTransition: .crossDissolve(0.2),
+            completion: { response in
+                self.spinner.stopAnimating()
+                self.spinner.alpha = 0
+                
+                if(response.error != nil){
+                    self.imageView.image = UIImage(named: "image_not_found")
+                }
+            }
+        )
+        
+        title.text = cardItem.title
+        let infoText = "\(cardItem.ownername) / \(cardItem.getDateFormated())"
+        info.text = infoText
+    }
 }

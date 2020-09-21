@@ -39,38 +39,10 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as? CollectionViewCell else { fatalError("Couldn't dequeue a cell")}
         let cardItem = cards[indexPath.row]
-        cell.spinner.startAnimating()
-        cell.spinner.alpha = 1
-        cell.imageView.image = nil
-        cell.imageView.layer.borderWidth = 1.00
-        cell.imageView.layer.borderColor = UIColor.lightGray.cgColor
-
-        let url = URL(string: cardItem.urlMedium!)!
-        cell.imageView.af.setImage(
-            withURL: url,
-            imageTransition: .crossDissolve(0.2),
-            completion: { response in
-                cell.spinner.stopAnimating()
-                cell.spinner.alpha = 0
-                
-                if(response.error != nil){
-                    cell.imageView.image = UIImage(named: "image_not_found")
-                }
-            }
-        )
+        cell.setData(cardItem)
+    
+        checkIfRequirePagination(position: indexPath.row)
         
-        cell.title.text = cardItem.title
-        let info = "\(cardItem.ownername) / \(cardItem.getDateFormated())"
-        cell.info.text = info
-        
-        if(indexPath.row + 9 > cards.count && lastPage < totalPages && !loadingNexPage){
-            if(queryString.isEmpty){
-                requestData()
-            } else {
-                search(queryString)
-            }
-        }
-
         return cell
     }
     
@@ -124,6 +96,16 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     /*
      Data Loading and Search
      */
+    func checkIfRequirePagination(position: Int){
+        if(position + 9 > cards.count && lastPage < totalPages && !loadingNexPage){
+            if(queryString.isEmpty){
+                requestData()
+            } else {
+                search(queryString)
+            }
+        }
+    }
+    
     func requestData() {
         if(lastPage < totalPages && !loadingNexPage){
             loadingNexPage = true
