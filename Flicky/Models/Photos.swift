@@ -9,14 +9,13 @@
 import Foundation
 
 class Photos: Codable {
-    let page, pages, perpage, total: Int
+    let page, pages, perpage: Int
     let photo: [Photo]
 
     init(page: Int, pages: Int, perpage: Int, total: Int, photo: [Photo]) {
         self.page = page
         self.pages = pages
         self.perpage = perpage
-        self.total = total
         self.photo = photo
     }
 }

@@ -15,6 +15,7 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var spinner: UIActivityIndicatorView!
     var cards = [Photo]()
+    var timer: Timer?
     
     
     override func viewDidLoad() {
@@ -73,7 +74,15 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else { return }
-        print(text)
+        
+        timer?.invalidate()
+        
+        if(!text.isEmpty){
+            timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
+                timer.invalidate()
+                self.search(text)
+            }
+        }
     }
     
     func setupUI(){
@@ -82,19 +91,37 @@ class FeedViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func requestData() {
         APIManager.getFeed().response { response in
+            debugPrint(response)
             if(response.data != nil){
-                let feed = try? JSONDecoder().decode(Feed.self, from: response.data!)
-
-                feed?.photos.photo.forEach({
-                   if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
-                       self.cards.append($0)
-                   }
-                })
-
-                self.spinner.stopAnimating()
-                self.spinner.alpha = 0
-                self.collectionView.reloadData()
+                self.presentData(response.data!)
+            }
+        }
+    }
+    
+    func search(_ queryString: String){
+        self.spinner.startAnimating()
+        self.spinner.alpha = 1
+        
+        APIManager.search(queryString).response { response in
+            if(response.data != nil){
+                self.tabBarController?.selectedIndex = 0
+                self.presentData(response.data!)
            }
         }
+    }
+    
+    func presentData(_ data: Data) {
+        let feed = try? JSONDecoder().decode(Feed.self, from: data)
+
+        self.cards.removeAll()
+        feed?.photos.photo.forEach({
+            if($0.urlLarge != nil && $0.urlMedium != nil && !$0.title.isEmpty){
+               self.cards.append($0)
+            }
+        })
+
+        self.spinner.stopAnimating()
+        self.spinner.alpha = 0
+        self.collectionView.reloadData()
     }
 }

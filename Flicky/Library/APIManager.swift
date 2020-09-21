@@ -19,6 +19,15 @@ class APIManager {
         return AF.request(API.FlickrURL, parameters: params)
     }
     
+    static func search(_ query: String) -> DataRequest {
+        var params = getBaseParams()
+        params[Params.Method] = FlickrMethod.Search
+        params[Params.Extras] = ParamsValues.Extras
+        params[Params.Text] = query
+        
+        return AF.request(API.FlickrURL, parameters: params)
+    }
+    
     private static func getBaseParams() -> [String:String] {
         return [
             Params.Format : ParamsValues.Json,

@@ -19,6 +19,7 @@ struct Params {
     static let Method = "method"
     static let ApiKey = "api_key"
     static let Extras = "extras"
+    static let Text = "text"
 }
 
 struct ParamsValues {
@@ -29,4 +30,5 @@ struct ParamsValues {
 
 struct FlickrMethod {
     static let GetRecent = "flickr.photos.getRecent"
+    static let Search = "flickr.photos.search"
 }

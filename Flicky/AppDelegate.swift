@@ -44,16 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let searchController = UISearchController(searchResultsController: nil)
             searchController.searchBar.keyboardAppearance = UIKeyboardAppearance.dark
             searchController.searchResultsUpdater = feedViewController
-            searchController.hidesNavigationBarDuringPresentation = false
+            searchController.hidesNavigationBarDuringPresentation = true
             searchController.view.backgroundColor = UIColor.black
             
             let searchContainerViewController = UISearchContainerViewController(searchController: searchController)
             searchContainerViewController.title = "Search"
             
-//            let searchNavController = UINavigationController(rootViewController: searchContainerViewController)
-//            searchNavController.tabBarItem = UITabBarItem(title: "Search", image: UIImage(named: "searchIcon"), tag: 0)
-
-//            tabBarController.viewControllers?.append(searchNavController)
             tabBarController.viewControllers?.append(searchContainerViewController)
         }
 
